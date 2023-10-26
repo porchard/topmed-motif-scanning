@@ -1,0 +1,19 @@
+MEME version 4.4
+
+ALPHABET= ACGT
+
+strands: + -
+
+Background letter frequencies:
+A 0.29 C 0.21 G 0.21 T 0.29
+
+MOTIF HOXA7_1
+
+letter-probability matrix: alength= 4 nsites=1000
+0.0047	0.5239	0.0031	0.4683
+0.0047	0.9875	0.0031	0.0047
+0.9891	0.0031	0.0031	0.0047
+0.9891	0.0031	0.0031	0.0047
+0.0047	0.0031	0.0031	0.9891
+0.0047	0.9875	0.0031	0.0047
+0.0047	0.0031	0.2925	0.6997

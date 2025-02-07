@@ -11,18 +11,18 @@ define NL
 endef
 
 motifs:
-	mkdir -p $(DATA)/motifs
-	scp wolverine:/lab/work/porchard/2022-muscle-sn/work/snp-sensitive-motif-scanning/data/meme/* $(DATA)/motifs/
-	rm $(DATA)/motifs/MYB_3.meme
+	cd $(DATA) && tar -xvzf motifs.tar.gz
 
 vcf:
 	mkdir -p $(ANALYSIS)
 	cd $(ANALYSIS) && nohup nextflow run -resume --results $(ANALYSIS)/results --vcf_glob '/net/topmed10/working/porchard/rnaseq/work/scan-variant-vcf-files/freeze-2b/results/vcfs-by-chrom/Whole_blood*.vcf.gz' $(ROOT)/make-vcf.nf &
 
-scan: FASTA=/net/topmed10/working/porchard/rnaseq/data/fasta/Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta
+fasta:
+	mkdir -p $(DATA)/fasta && ln -s /net/topmed10/working/porchard/rnaseq/data/fasta/Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta $(DATA)/fasta/
+
 scan:
 	mkdir -p $(ANALYSIS)
-	cd $(ANALYSIS) && nohup nextflow run -resume -qs 1000 --results $(ANALYSIS)/results --meme_glob '$(DATA)/motifs/*.meme' --fasta $(FASTA) --vcf $(WORK)/vcf/results/bcfs-merged/merged.vcf.gz $(PIPELINES)/snp-sensitive-motif-scanning/main.nf &
+	cd $(ANALYSIS) && nohup nextflow run -resume -qs 1000 --results $(ANALYSIS)/results --meme_glob '$(DATA)/motifs/*.meme' --fasta $(DATA)/fasta/Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta --vcf $(DATA)/vcf/*.vcf.gz $(PIPELINES)/snp-sensitive-motif-scanning/main.nf &
 
 fimo-ref-and-alt-scores:
 	mkdir -p $(ANALYSIS)
